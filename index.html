@@ -336,24 +336,34 @@
 </script>
 
   
+<!-- ✅ Tint Maps 搜尋浮窗 + 展開卡片 控制 JS（整合版） -->
 <script>
   window.onload = () => {
     // 搜尋浮窗控制
-    document.querySelector(".search-box").addEventListener("click", () => {
-      document.querySelector(".search-overlay").style.display = "block";
-    });
-    document.querySelector(".search-close").addEventListener("click", () => {
-      document.querySelector(".search-overlay").style.display = "none";
-    });
+    const searchBox = document.querySelector(".search-box");
+    const searchOverlay = document.querySelector(".search-overlay");
+    const searchClose = document.querySelector(".search-close");
 
-    // 展開大卡片控制
+    if (searchBox && searchOverlay && searchClose) {
+      searchBox.addEventListener("click", () => {
+        searchOverlay.style.display = "block";
+      });
+      searchClose.addEventListener("click", () => {
+        searchOverlay.style.display = "none";
+      });
+    }
+
+    // 展開卡片控制
     const storeCard = document.querySelector(".store-card");
     const expandedCard = document.querySelector(".expanded-card");
     let isExpanded = false;
-    storeCard.addEventListener("click", () => {
-      isExpanded = !isExpanded;
-      expandedCard.style.display = isExpanded ? "block" : "none";
-    });
+
+    if (storeCard && expandedCard) {
+      storeCard.addEventListener("click", () => {
+        isExpanded = !isExpanded;
+        expandedCard.style.display = isExpanded ? "block" : "none";
+      });
+    }
   };
 </script>
 </body>
