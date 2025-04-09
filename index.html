@@ -1,128 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tint Maps 首頁 Demo</title>
-  <style>
-html, body {
-  height: 100vh;
-  background-color: #f9f9f9;
-  font-family: 'Noto Sans TC', 'Helvetica Neue', sans-serif;
-  color: #222;
-}
-
-.search-bar {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-
-.search-bar .icon {
-  opacity: 0.5;
-}
-
-.filter-btn {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-
-.map-img {
-  opacity: 1;
-  filter: grayscale(0.1) brightness(0.97);
-}
-
-.dot.small {
-  width: 12px;
-  height: 12px;
-  background-color: #bbb;
-  box-shadow: 0 0 4px rgba(0,0,0,0.1);
-}
-
-.dot.active {
-  width: 26px;
-  height: 26px;
-  background-color: #222;
-  box-shadow: 0 0 8px rgba(0,0,0,0.2);
-}
-
-.store-card {
-  background: #ffffff;
-  border: 1px solid #eee;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.06);
-}
-
-.store-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #111;
-}
-
-.store-info {
-  font-size: 14px;
-  color: #555;
-}
-
-.store-location {
-  font-size: 13px;
-  color: #999;
-}
-
-.store-tags span {
-  background-color: #f0f0f0;
-  color: #444;
-}
-
-.bottom-nav {
-  background: #ffffff;
-  border-top: 1px solid #eee;
-}
-
-.nav-item {
-  color: #999;
-  font-size: 18px;
-}
-
-.nav-item.active {
-  color: #333;
-}
-</style>
+  <title>Tint Maps Demo</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLCB3EKFwsIqPwEEL_hxL7zluVpnzcCNM"></script>
 </head>
 <body>
-  <div class="top-bar">
-    <div class="search-bar">
-      <img src="./img/icon_search.png" alt="搜尋" class="icon" />
-      <input type="text" placeholder="搜尋地址或區域" disabled />
-    </div>
-    <button class="filter-btn">
-      <img src="./img/icon_filter.png" alt="篩選" />
-    </button>
-  </div>
-
-  <div class="map-container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/OpenStreetMap_logo.svg/320px-OpenStreetMap_logo.svg.png" alt="地圖底圖" class="map-img" />
-    <div class="dot small" style="top: 30%; left: 20%;"></div>
-    <div class="dot active" style="top: 45%; left: 50%;"></div>
-    <div class="dot small" style="top: 60%; left: 75%;"></div>
-  </div>
-
-  <div class="store-card">
-    <div class="store-name">time nailart 好時質甲</div>
-    <div class="store-info">美甲 / 美睫・預約制</div>
-    <div class="store-location">0.5 公里・台北市中山區</div>
-    <div class="store-tags">
-      <span>預約 / 美睫</span>
-      <span>預約制</span>
-      <span>0.5 公里</span>
-    </div>
-  </div>
-
-  <div class="bottom-nav">
-    <div class="nav-item active">📍</div>
-    <div class="nav-item">🤍</div>
-    <div class="nav-item">👤</div>
-  </div>
+  <div id="map"></div>
+  <div class="card-container" id="cardContainer"></div>
+  <script src="script.js"></script>
 </body>
 </html>
