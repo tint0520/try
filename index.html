@@ -336,15 +336,25 @@
 </script>
 
   
-  <!-- JS 控制搜尋欄開關浮窗 -->
-  <script>
-  document.querySelector(".search-box").addEventListener("click", () => {
-    document.querySelector(".search-overlay").style.display = "block";
-  });
+<script>
+  window.onload = () => {
+    // 搜尋浮窗控制
+    document.querySelector(".search-box").addEventListener("click", () => {
+      document.querySelector(".search-overlay").style.display = "block";
+    });
+    document.querySelector(".search-close").addEventListener("click", () => {
+      document.querySelector(".search-overlay").style.display = "none";
+    });
 
-  document.querySelector(".search-close").addEventListener("click", () => {
-    document.querySelector(".search-overlay").style.display = "none";
-  });
+    // 展開大卡片控制
+    const storeCard = document.querySelector(".store-card");
+    const expandedCard = document.querySelector(".expanded-card");
+    let isExpanded = false;
+    storeCard.addEventListener("click", () => {
+      isExpanded = !isExpanded;
+      expandedCard.style.display = isExpanded ? "block" : "none";
+    });
+  };
 </script>
 </body>
 </html>
