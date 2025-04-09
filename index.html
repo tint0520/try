@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tint Maps 美感首頁</title>
+  <title>Tint Maps 美感首頁 with 搜尋浮窗</title>
   <style>
     * {
       box-sizing: border-box;
@@ -44,18 +43,12 @@
       align-items: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       border: 1px solid #eee;
+      cursor: pointer;
     }
     .search-box img {
       width: 18px;
       margin-right: 8px;
       opacity: 0.6;
-    }
-    .search-box input {
-      border: none;
-      outline: none;
-      font-size: 15px;
-      width: 100%;
-      background: transparent;
     }
     .filter-icon {
       background: #fff;
@@ -146,6 +139,88 @@
       width: 24px;
       opacity: 0.7;
     }
+
+    .search-overlay {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+      z-index: 999;
+      padding: 20px 16px 30px;
+      max-width: 420px;
+      margin: auto;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .search-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .search-input-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: #f6f6f6;
+      border-radius: 999px;
+      padding: 10px 14px;
+      margin-right: 12px;
+    }
+    .search-input-box .icon {
+      width: 16px;
+      margin-right: 6px;
+      opacity: 0.6;
+    }
+    .search-input-box input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 15px;
+      width: 100%;
+    }
+    .search-close {
+      font-size: 15px;
+      color: #666;
+      cursor: pointer;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 15px;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .chip {
+      background: #f0f0f0;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+    }
+    .apply-btn {
+      width: 100%;
+      padding: 12px;
+      background: #222;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -153,7 +228,7 @@
     <div class="top-bar">
       <div class="search-box">
         <img src="./img/icon_search.png" />
-        <input type="text" placeholder="搜尋地址或區域" disabled />
+        <span>搜尋地點 / 店名 / 服務</span>
       </div>
       <div class="filter-icon">
         <img src="./img/icon_filter.png" />
@@ -181,5 +256,51 @@
       <img src="./img/icon_direction.png" />
     </div>
   </div>
+
+  <!-- 🔍 搜尋浮窗 UI -->
+  <div class="search-overlay">
+    <div class="search-header">
+      <div class="search-input-box">
+        <img src="./img/icon_search.png" class="icon" />
+        <input type="text" placeholder="搜尋地點 / 店名 / 服務" />
+      </div>
+      <div class="search-close">取消</div>
+    </div>
+    <div class="search-body">
+      <div class="section">
+        <div class="section-title">熱門地區</div>
+        <div class="chip-group">
+          <span class="chip">台北市</span>
+          <span class="chip">新北市</span>
+          <span class="chip">桃園</span>
+          <span class="chip">台中</span>
+          <span class="chip">台南</span>
+          <span class="chip">高雄</span>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">服務分類</div>
+        <div class="chip-group">
+          <span class="chip">美甲</span>
+          <span class="chip">美睫</span>
+          <span class="chip">美容</span>
+          <span class="chip">紋繡</span>
+          <span class="chip">美體</span>
+        </div>
+      </div>
+      <button class="apply-btn">套用篩選</button>
+    </div>
+  </div>
+
+  <!-- JS 控制搜尋欄開關浮窗 -->
+  <script>
+    document.querySelector(\".search-box\").addEventListener(\"click\", () => {
+      document.querySelector(\".search-overlay\").style.display = \"block\";
+    });
+
+    document.querySelector(\".search-close\").addEventListener(\"click\", () => {
+      document.querySelector(\".search-overlay\").style.display = \"none\";
+    });
+  </script>
 </body>
 </html>
