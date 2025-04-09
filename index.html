@@ -292,6 +292,50 @@
     </div>
   </div>
 
+<!-- 💳 展開版店家卡片 UI -->
+<div class="expanded-card" style="display:none;">
+  <div class="card-header">
+    <img src="./img/sample_photo.jpg" alt="店家圖片">
+  </div>
+  <div class="card-body">
+    <h2 class="store-name">time nailart 好時質甲</h2>
+    <div class="tags">美甲 / 美睫・預約制</div>
+    <div class="address">台北市中山區．0.5 公里</div>
+    <div class="description">
+      店家簡介文字，這裡可以放 2~3 行介紹內容。<br>
+      例如：溫馨舒適空間 / 經驗豐富技師 / 價格透明 / 高評價店家。
+    </div>
+    <div class="action-buttons">
+      <a href="#" class="btn line"><img src="./img/icon_line.png"> LINE</a>
+      <a href="#" class="btn ig"><img src="./img/icon_instagram.png"> IG</a>
+      <a href="#" class="btn nav"><img src="./img/icon_direction.png"> 導航</a>
+      <a href="#" class="btn book">立即預約</a>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ JS 控制搜尋欄開關浮窗 -->
+<script>
+  document.querySelector(".search-box").addEventListener("click", () => {
+    document.querySelector(".search-overlay").style.display = "block";
+  });
+  document.querySelector(".search-close").addEventListener("click", () => {
+    document.querySelector(".search-overlay").style.display = "none";
+  });
+</script>
+
+<!-- ✅ JS 控制小卡點開展開大卡片 -->
+<script>
+  const storeCard = document.querySelector(".store-card");
+  const expandedCard = document.querySelector(".expanded-card");
+  let isExpanded = false;
+  storeCard.addEventListener("click", () => {
+    isExpanded = !isExpanded;
+    expandedCard.style.display = isExpanded ? "block" : "none";
+  });
+</script>
+
+  
   <!-- JS 控制搜尋欄開關浮窗 -->
   <script>
   document.querySelector(".search-box").addEventListener("click", () => {
