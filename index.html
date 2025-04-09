@@ -335,16 +335,23 @@
       店家簡介文字，這裡可以放 2~3 行介紹內容。<br>
       例如：溫馨舒適空間 / 經驗豐富技師 / 價格透明 / 高評價店家。
     </div>
-    <div class="action-buttons">
-      <a href="#" class="btn line"><img src="./img/icon_line.png"class="icon-btn"></a>
-      <a href="#" class="btn ig"><img src="./img/icon_instagram.png"class="icon-btn"></a>
-      <a href="#" class="btn nav"><img src="./img/icon_direction.png"class="icon-btn"></a>
-      <a href="#" class="btn book"><img src="./img/icon_book.png" class="icon-btn"></a>
-    </div>
-  </div>
+  <div class="action-buttons">
+  <a href="#" class="btn line">
+    <img src="./img/icon_line.png" class="icon-btn" />
+  </a>
+  <a href="#" class="btn ig">
+    <img src="./img/icon_instagram.png" class="icon-btn" />
+  </a>
+  <a href="#" class="btn nav">
+    <img src="./img/icon_direction.png" class="icon-btn" />
+  </a>
+  <a href="#" class="btn book">
+    <img src="./img/icon_book.png" class="icon-btn" />
+  </a>
 </div>
+</div> <!-- 關閉 .card-body -->
+</div> <!-- 關閉 .expanded-card -->
 
-  
 <!-- ✅ Tint Maps 搜尋浮窗 + 展開卡片 控制 JS（整合版） -->
 <script>
   window.onload = () => {
@@ -354,19 +361,6 @@
     if (storeCard && expandedCard) {
       let isExpanded = false;
 
-      storeCard.addEventListener("click", () => {
-        isExpanded = !isExpanded;
-        expandedCard.style.display = isExpanded ? "block" : "none";
-      });
-    }
-  };
-</script>
-    // 展開卡片控制
-    const storeCard = document.querySelector(".store-card");
-    const expandedCard = document.querySelector(".expanded-card");
-    let isExpanded = false;
-
-    if (storeCard && expandedCard) {
       storeCard.addEventListener("click", () => {
         isExpanded = !isExpanded;
         expandedCard.style.display = isExpanded ? "block" : "none";
