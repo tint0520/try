@@ -391,6 +391,8 @@
     const searchBox = document.querySelector(".search-box");
     const searchClose = document.querySelector(".search-close");
 
+    const locateBtn = document.getElementById("locate-btn");
+
     // 點小卡片 → 展開大卡
     storeCard.addEventListener("click", () => {
       expandedCard.style.display = "block";
@@ -442,6 +444,38 @@
     searchClose.addEventListener("click", () => {
       searchOverlay.style.display = "none";
     });
+
+    // 點定位 icon → 取得使用者位置並更新地圖
+    if (locateBtn) {
+      locateBtn.addEventListener("click", () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            const userLatLng = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+
+            // 將地圖中心移動到使用者位置
+            if (window.map) {
+              window.map.setCenter(userLatLng);
+
+              new google.maps.Marker({
+                position: userLatLng,
+                map: window.map,
+                icon: "./img/icon_location.png",
+                title: "你的位置",
+              });
+            } else {
+              alert("地圖尚未初始化，無法定位");
+            }
+          }, () => {
+            alert("無法取得你的位置，請確認裝置權限");
+          });
+        } else {
+          alert("此裝置不支援定位功能");
+        }
+      });
+    }
   };
 </script>
 </body>
