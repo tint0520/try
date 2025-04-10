@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- 白底圓圈 -->
+  <!-- 外圈圓框（白底 + 粉邊） -->
   <circle cx="32" cy="32" r="30" fill="#ffffff" stroke="#fcbec6" stroke-width="3"/>
-  <!-- 指針箭頭（斜右上） -->
-  <path d="M32 12 L40 52 L32 44 L24 52 Z" fill="#ff9285"/>
+  <!-- 指針：斜上右方箭頭（粉橘紅） -->
+  <path d="M32 18 L45 45 L32 38 L19 45 Z" fill="#ff9285"/>
 </svg>
