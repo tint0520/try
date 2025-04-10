@@ -390,7 +390,6 @@
     const menuBtn = document.querySelector(".bottom-nav img:nth-child(3)");
     const searchBox = document.querySelector(".search-box");
     const searchClose = document.querySelector(".search-close");
-
     const locateBtn = document.getElementById("locate-btn");
 
     // 點小卡片 → 展開大卡
@@ -445,7 +444,7 @@
       searchOverlay.style.display = "none";
     });
 
-    // 點定位 icon → 取得使用者位置並更新地圖
+    // ✅ 定位按鈕邏輯（點右上角定位）
     if (locateBtn) {
       locateBtn.addEventListener("click", () => {
         if (navigator.geolocation) {
@@ -455,7 +454,7 @@
               lng: position.coords.longitude,
             };
 
-            // 將地圖中心移動到使用者位置
+            // ✅ 地圖中心移動
             if (window.map) {
               window.map.setCenter(userLatLng);
 
@@ -477,6 +476,21 @@
       });
     }
   };
+</script>
+
+<!-- ✅ 初始化 Google 地圖 -->
+<script>
+  function initMap() {
+    const center = { lat: 25.034, lng: 121.564 };
+    window.map = new google.maps.Map(document.getElementById("map"), {
+      center,
+      zoom: 15,
+      disableDefaultUI: true
+    });
+  }
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLCB3EKFwsIqPwEEL_hxL7zluVpnzcCNM&callback=initMap">
 </script>
 </body>
 </html>
