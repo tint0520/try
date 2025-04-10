@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tint Maps 美感首頁 with 搜尋浮窗</title>
+  <title>Tint Maps 完整首頁</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Noto Sans TC', sans-serif;
@@ -57,9 +55,8 @@
       padding: 10px;
       margin-left: 12px;
     }
-    .filter-icon img {
-      width: 20px;
-    }
+    .filter-icon img { width: 20px; }
+
 
     .map {
       position: relative;
@@ -88,16 +85,22 @@
       background: #ec5c5c;
       box-shadow: 0 0 10px rgba(255, 100, 100, 0.5);
     }
-
+    .map-overlay {
+      position: fixed;
+      top: 0; bottom: 0; left: 0; right: 0;
+      z-index: 900;
+      display: none;
+    }
     .store-card {
       background: #fff;
       border-radius: 16px;
       padding: 16px 20px;
-      position: absolute;
+      position: fixed;
       bottom: 70px;
       left: 16px;
       right: 16px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      z-index: 901;
     }
     .store-card h2 {
       font-size: 18px;
@@ -126,7 +129,6 @@
       font-size: 12px;
       color: #333;
     }
-
     .bottom-nav {
       display: flex;
       justify-content: space-around;
@@ -140,61 +142,23 @@
       opacity: 0.7;
     }
 
-    .search-overlay {
-      display: none;
+
+    .search-overlay, .favorite-view, .menu-overlay {
       position: fixed;
+      top: 0;
       bottom: 0;
       left: 0;
       right: 0;
       background: #fff;
-      border-radius: 20px 20px 0 0;
-      box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
-      z-index: 999;
-      padding: 20px 16px 30px;
-      max-width: 420px;
-      margin: auto;
-      font-family: 'Noto Sans TC', sans-serif;
+      z-index: 998;
+      padding: 24px 16px;
+      overflow-y: auto;
+      display: none;
     }
-    .search-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .search-header, .favorite-header, .menu-header {
+      font-size: 20px;
+      font-weight: bold;
       margin-bottom: 20px;
-    }
-    .search-input-box {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      background: #f6f6f6;
-      border-radius: 999px;
-      padding: 10px 14px;
-      margin-right: 12px;
-    }
-    .search-input-box .icon {
-      width: 16px;
-      margin-right: 6px;
-      opacity: 0.6;
-    }
-    .search-input-box input {
-      border: none;
-      outline: none;
-      background: transparent;
-      font-size: 15px;
-      width: 100%;
-    }
-    .search-close {
-      font-size: 15px;
-      color: #666;
-      cursor: pointer;
-    }
-    .section {
-      margin-bottom: 20px;
-    }
-    .section-title {
-      font-size: 15px;
-      color: #333;
-      font-weight: 500;
-      margin-bottom: 10px;
     }
     .chip-group {
       display: flex;
@@ -221,39 +185,73 @@
       cursor: pointer;
       margin-top: 10px;
     }
-
-.expanded-card {
-  display: none;
-  position: fixed;
-  bottom: 80px;
-  left: 16px;
-  right: 16px;
-  z-index: 999;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 420px;
-  margin: auto;
-}
-    /* 統一控制 icon 按鈕尺寸用 */
-.icon-btn {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  display: inline-block;
-  vertical-align: middle;
-}
+    .menu-btn {
+      padding: 14px;
+      font-size: 15px;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      background: #f9f9f9;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+    .expanded-card {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      left: 16px;
+      right: 16px;
+      z-index: 902;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 20px;
+      max-width: 420px;
+      margin: auto;
+    }
     .card-header img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
-}
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+    .icon-btn {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .fav-card {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 12px;
+      align-items: center;
+    }
+    .fav-card img {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .fav-card .info h3 {
+      font-size: 16px;
+      margin: 0;
+      color: #111;
+    }
+    .fav-card .info p {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+    }
   </style>
 </head>
 <body>
+
+
   <div class="wrapper">
     <div class="top-bar">
       <div class="search-box">
@@ -264,12 +262,15 @@
         <img src="./img/icon_filter.png" />
       </div>
     </div>
+
     <div class="map">
       <img src="./img/marker_pink_circle.png" alt="map" />
       <div class="dot small" style="top: 30%; left: 25%;"></div>
       <div class="dot active" style="top: 50%; left: 50%;"></div>
       <div class="dot small" style="top: 65%; left: 70%;"></div>
+      <div class="map-overlay"></div>
     </div>
+
     <div class="store-card">
       <h2>time nailart 好時質甲</h2>
       <div class="info">美甲 / 美睫・預約制</div>
@@ -280,50 +281,17 @@
         <span>0.5 公里</span>
       </div>
     </div>
+
     <div class="bottom-nav">
-      <img src="./img/icon_location.png" />
-      <img src="./img/icon_heart_fill.png" />
-      <img src="./img/icon_direction.png" />
+      <img src="./img/icon_map.png" />
+      <img src="./img/icon_heart.png" />
+      <img src="./img/icon_menu.png" />
     </div>
   </div>
 
-  <!-- 🔍 搜尋浮窗 UI -->
-  <div class="search-overlay">
-    <div class="search-header">
-      <div class="search-input-box">
-        <img src="./img/icon_search.png" class="icon" />
-        <input type="text" placeholder="搜尋地點 / 店名 / 服務" />
-      </div>
-      <div class="search-close">取消</div>
-    </div>
-    <div class="search-body">
-      <div class="section">
-        <div class="section-title">熱門地區</div>
-        <div class="chip-group">
-          <span class="chip">台北市</span>
-          <span class="chip">新北市</span>
-          <span class="chip">桃園</span>
-          <span class="chip">台中</span>
-          <span class="chip">台南</span>
-          <span class="chip">高雄</span>
-        </div>
-      </div>
-      <div class="section">
-        <div class="section-title">服務分類</div>
-        <div class="chip-group">
-          <span class="chip">美甲</span>
-          <span class="chip">美睫</span>
-          <span class="chip">美容</span>
-          <span class="chip">紋繡</span>
-          <span class="chip">美體</span>
-        </div>
-      </div>
-      <button class="apply-btn">套用篩選</button>
-    </div>
-  </div>
 
-<!-- 💳 展開版店家卡片 UI -->
-<div class="expanded-card" style="display:none;">
+<!-- 展開版卡片 UI -->
+<div class="expanded-card">
   <div class="card-header">
     <img src="./img/sample_photo.jpg" alt="店家圖片">
   </div>
@@ -335,38 +303,144 @@
       店家簡介文字，這裡可以放 2~3 行介紹內容。<br>
       例如：溫馨舒適空間 / 經驗豐富技師 / 價格透明 / 高評價店家。
     </div>
-  <div class="action-buttons">
-  <a href="#" class="btn line">
-    <img src="./img/icon_line.png" class="icon-btn" />
-  </a>
-  <a href="#" class="btn ig">
-    <img src="./img/icon_instagram.png" class="icon-btn" />
-  </a>
-  <a href="#" class="btn nav">
-    <img src="./img/icon_direction.png" class="icon-btn" />
-  </a>
-  <a href="#" class="btn book">
-    <img src="./img/icon_book.png" class="icon-btn" />
-  </a>
+    <div class="action-buttons">
+      <a href="#" class="btn line"><img src="./img/icon_line.png" class="icon-btn" /></a>
+      <a href="#" class="btn ig"><img src="./img/icon_instagram.png" class="icon-btn" /></a>
+      <a href="#" class="btn nav"><img src="./img/icon_direction.png" class="icon-btn" /></a>
+      <a href="#" class="btn book"><img src="./img/icon_book.png" class="icon-btn" /></a>
+    </div>
+  </div>
 </div>
-</div> <!-- 關閉 .card-body -->
-</div> <!-- 關閉 .expanded-card -->
 
-<!-- ✅ Tint Maps 搜尋浮窗 + 展開卡片 控制 JS（整合版） -->
+<!-- 收藏頁 -->
+<div class="favorite-view">
+  <div class="favorite-header">我的收藏</div>
+  <div class="favorite-list">
+    <div class="fav-card">
+      <img src="./img/sample_photo.jpg">
+      <div class="info">
+        <h3>Rose Beauty</h3>
+        <p>美甲 / 美睫・預約制</p>
+      </div>
+    </div>
+    <div class="fav-card">
+      <img src="./img/sample_photo.jpg">
+      <div class="info">
+        <h3>Jin Beauty</h3>
+        <p>美體 / 按摩・現場可接</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 漢堡選單浮窗 -->
+<div class="menu-overlay">
+  <div class="menu-header">功能選單</div>
+  <div class="menu-options">
+    <button class="menu-btn">店家上架</button>
+    <button class="menu-btn">店家上架</button>
+    <button class="menu-btn">店家上架</button>
+    <button class="menu-btn">店家上架</button>
+  </div>
+</div>
+
+<!-- 搜尋浮窗 -->
+<div class="search-overlay">
+  <div class="search-header">
+    <div class="search-input-box">
+      <img src="./img/icon_search.png" class="icon" />
+      <input type="text" placeholder="搜尋地點 / 店名 / 服務" />
+    </div>
+    <div class="search-close">取消</div>
+  </div>
+  <div class="search-body">
+    <div class="section-title">熱門地區</div>
+    <div class="chip-group">
+      <span class="chip">台北市</span>
+      <span class="chip">新北市</span>
+      <span class="chip">桃園</span>
+      <span class="chip">台中</span>
+      <span class="chip">台南</span>
+      <span class="chip">高雄</span>
+    </div>
+    <div class="section-title" style="margin-top: 20px;">服務分類</div>
+    <div class="chip-group">
+      <span class="chip">美甲</span>
+      <span class="chip">美睫</span>
+      <span class="chip">美容</span>
+      <span class="chip">紋繡</span>
+      <span class="chip">美體</span>
+    </div>
+    <button class="apply-btn">套用篩選</button>
+  </div>
+</div>
+
 <script>
   window.onload = () => {
-    // 展開卡片控制
     const storeCard = document.querySelector(".store-card");
     const expandedCard = document.querySelector(".expanded-card");
+    const mapOverlay = document.querySelector(".map-overlay");
 
-    if (storeCard && expandedCard) {
-      let isExpanded = false;
+    const favoriteView = document.querySelector(".favorite-view");
+    const menuOverlay = document.querySelector(".menu-overlay");
+    const searchOverlay = document.querySelector(".search-overlay");
 
-      storeCard.addEventListener("click", () => {
-        isExpanded = !isExpanded;
-        expandedCard.style.display = isExpanded ? "block" : "none";
-      });
-    }
+    const heartBtn = document.querySelector(".bottom-nav img:nth-child(2)");
+    const menuBtn = document.querySelector(".bottom-nav img:nth-child(3)");
+    const searchBox = document.querySelector(".search-box");
+    const searchClose = document.querySelector(".search-close");
+
+    // 點小卡片 → 展開大卡
+    storeCard.addEventListener("click", () => {
+      expandedCard.style.display = "block";
+      storeCard.style.display = "none";
+      mapOverlay.style.display = "block";
+      favoriteView.style.display = "none";
+      menuOverlay.style.display = "none";
+      searchOverlay.style.display = "none";
+    });
+
+    // 點地圖背景 → 關閉展開卡片
+    mapOverlay.addEventListener("click", () => {
+      expandedCard.style.display = "none";
+      storeCard.style.display = "block";
+      mapOverlay.style.display = "none";
+    });
+
+    // 點愛心 → 打開收藏頁
+    heartBtn.addEventListener("click", () => {
+      favoriteView.style.display = "block";
+      expandedCard.style.display = "none";
+      storeCard.style.display = "block";
+      mapOverlay.style.display = "none";
+      menuOverlay.style.display = "none";
+      searchOverlay.style.display = "none";
+    });
+
+    // 點三條線 → 打開右側選單
+    menuBtn.addEventListener("click", () => {
+      menuOverlay.style.display = "block";
+      expandedCard.style.display = "none";
+      storeCard.style.display = "block";
+      mapOverlay.style.display = "none";
+      favoriteView.style.display = "none";
+      searchOverlay.style.display = "none";
+    });
+
+    // 點搜尋欄 → 顯示搜尋浮窗
+    searchBox.addEventListener("click", () => {
+      searchOverlay.style.display = "block";
+      expandedCard.style.display = "none";
+      storeCard.style.display = "block";
+      mapOverlay.style.display = "none";
+      favoriteView.style.display = "none";
+      menuOverlay.style.display = "none";
+    });
+
+    // 點取消 → 關閉搜尋浮窗
+    searchClose.addEventListener("click", () => {
+      searchOverlay.style.display = "none";
+    });
   };
 </script>
 </body>
