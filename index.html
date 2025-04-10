@@ -399,6 +399,15 @@
     const searchClose = document.querySelector(".search-close");
     const locateBtn = document.getElementById("locate-btn");
 
+    // ✅ 紅點切換邏輯
+    function activateDot(storeId) {
+      document.querySelectorAll(".dot").forEach(dot => {
+        dot.classList.remove("active");
+      });
+      const target = document.querySelector(`.dot[data-id="${storeId}"]`);
+      if (target) target.classList.add("active");
+    }
+
     // 點小卡片 → 展開大卡
     storeCard.addEventListener("click", () => {
       expandedCard.style.display = "block";
@@ -407,6 +416,10 @@
       favoriteView.style.display = "none";
       menuOverlay.style.display = "none";
       searchOverlay.style.display = "none";
+
+      // ✅ 點小卡片時觸發對應紅點放大
+      const storeId = storeCard.getAttribute("data-id");
+      activateDot(storeId);
     });
 
     // 點地圖背景 → 關閉展開卡片
@@ -461,10 +474,8 @@
               lng: position.coords.longitude,
             };
 
-            // ✅ 地圖中心移動
             if (window.map) {
               window.map.setCenter(userLatLng);
-
               new google.maps.Marker({
                 position: userLatLng,
                 map: window.map,
