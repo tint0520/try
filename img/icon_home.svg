@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- 粉色背景 -->
+  <circle cx="32" cy="32" r="32" fill="#ffdede"/>
+  
+  <!-- 房子圖案 -->
+  <path d="M20 34 L32 24 L44 34" fill="none" stroke="white" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="24" y="34" width="16" height="12" fill="none" stroke="white" stroke-width="3"/>
+</svg>
