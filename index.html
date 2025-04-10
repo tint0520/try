@@ -271,7 +271,7 @@
 </div>
     </div>
 
-   <div class="map">
+  <div class="map" id="map"></div>
   <img src="./img/marker_pink_circle.png" alt="map" />
   <div class="dot small" data-id="store1" style="top: 30%; left: 25%;"></div>
   <div class="dot small" data-id="store2" style="top: 50%; left: 50%;"></div>
@@ -498,6 +498,24 @@
 
 <!-- ✅ 初始化 Google 地圖 -->
 <script>
+  const stores = [
+    {
+      id: 'store1',
+      name: 'time nailart 好時質甲',
+      tags: '美甲 / 美睫・預約制',
+      address: '台北市中山區',
+      description: '溫馨舒適空間 / 經驗豐富技師 / 價格透明 / 高評價店家',
+      hours: '10:00 - 20:00',
+      lat: 25.034,
+      lng: 121.564,
+      img: './img/sample_photo.jpg',
+      line: '#',
+      ig: '#',
+      nav: '#',
+      book: '#'
+    }
+  ];
+
   function initMap() {
     const center = { lat: 25.034, lng: 121.564 };
     window.map = new google.maps.Map(document.getElementById("map"), {
@@ -505,6 +523,48 @@
       zoom: 15,
       disableDefaultUI: true
     });
+
+    stores.forEach(store => {
+      const marker = new google.maps.Marker({
+        position: { lat: store.lat, lng: store.lng },
+        map: window.map,
+        title: store.name,
+        icon: './img/marker_pink_circle.png',
+      });
+
+      marker.addListener('click', () => {
+        renderCard(store);
+      });
+    });
+  }
+
+  function renderCard(store) {
+    const card = document.querySelector('.store-card');
+    const expand = document.querySelector('.expanded-card');
+    const overlay = document.querySelector('.map-overlay');
+
+    card.style.display = 'block';
+    card.querySelector('h2').textContent = store.name;
+    card.querySelector('.info').textContent = store.tags;
+    card.querySelector('.distance').textContent = `${store.address}`;
+    card.querySelector('.tags').innerHTML = `
+      <span>${store.tags}</span>
+      <span>預約制</span>
+    `;
+
+    expand.querySelector('img').src = store.img;
+    expand.querySelector('.store-name').textContent = store.name;
+    expand.querySelector('.tags').textContent = store.tags;
+    expand.querySelector('.address').textContent = store.address;
+    expand.querySelector('.description').innerHTML = store.description;
+
+    expand.querySelector('.line').href = store.line;
+    expand.querySelector('.ig').href = store.ig;
+    expand.querySelector('.nav').href = store.nav;
+    expand.querySelector('.book').href = store.book;
+
+    expand.style.display = 'none';
+    overlay.style.display = 'none';
   }
 </script>
 <script async defer
