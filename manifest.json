@@ -1,0 +1,20 @@
+{
+  "name": "Tint Maps 美業地圖",
+  "short_name": "Tint Maps",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "./img/icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
