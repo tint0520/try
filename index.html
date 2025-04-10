@@ -548,12 +548,13 @@
             if (window.map) {
               window.map.setCenter(userLatLng);
               new google.maps.Marker({
-  position: { lat: ..., lng: ... },
+  position: userLatLng,
   map: window.map,
   icon: {
-    url: "上面的 data:image/svg+xml...",
-    scaledSize: new google.maps.Size(32, 32)
+    url: "./img/icon_location.svg", // ✅ 你的 SVG 圖標檔案位置
+    scaledSize: new google.maps.Size(32, 32), // ✅ 縮成合適大小
   },
+  title: "你的位置",
 });
             } else {
               alert("地圖尚未初始化，無法定位");
