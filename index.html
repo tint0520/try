@@ -550,8 +550,11 @@
               new google.maps.Marker({
                 position: userLatLng,
                 map: window.map,
-                icon: "./img/icon_location.png",
-                title: "你的位置",
+                icon: {
+    url: "./img/icon_location.png",
+    scaledSize: new google.maps.Size(32, 32), // ✅ 設定 icon 尺寸
+  },
+  title: "你的位置",
               });
             } else {
               alert("地圖尚未初始化，無法定位");
