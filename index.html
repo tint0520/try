@@ -540,34 +540,42 @@
     });
   }
 
-  function renderCard(store) {
-    const card = document.querySelector('.store-card');
-    const expand = document.querySelector('.expanded-card');
-    const overlay = document.querySelector('.map-overlay');
+function renderCard(store) {
+  const card = document.querySelector('.store-card');
+  const expand = document.querySelector('.expanded-card');
+  const overlay = document.querySelector('.map-overlay');
 
-    card.style.display = 'block';
-    card.querySelector('h2').textContent = store.name;
-    card.querySelector('.info').textContent = store.tags;
-    card.querySelector('.distance').textContent = `${store.address}`;
-    card.querySelector('.tags').innerHTML = `
-      <span>${store.tags}</span>
-      <span>預約制</span>
-    `;
-
-    expand.querySelector('img').src = store.img;
-    expand.querySelector('.store-name').textContent = store.name;
-    expand.querySelector('.tags').textContent = store.tags;
-    expand.querySelector('.address').textContent = store.address;
-    expand.querySelector('.description').innerHTML = store.description;
-
-    expand.querySelector('.line').href = store.line;
-    expand.querySelector('.ig').href = store.ig;
-    expand.querySelector('.nav').href = store.nav;
-    expand.querySelector('.book').href = store.book;
-
-    expand.style.display = 'none';
-    overlay.style.display = 'none';
+  // ✅ 補上地圖自動移動到該店家位置
+  if (window.map) {
+    window.map.setCenter({ lat: store.lat, lng: store.lng });
   }
+
+  // ✅ 更新小卡片內容
+  card.style.display = 'block';
+  card.querySelector('h2').textContent = store.name;
+  card.querySelector('.info').textContent = store.tags;
+  card.querySelector('.distance').textContent = `${store.address}`;
+  card.querySelector('.tags').innerHTML = `
+    <span>${store.tags}</span>
+    <span>預約制</span>
+  `;
+
+  // ✅ 更新展開卡片內容
+  expand.querySelector('img').src = store.img;
+  expand.querySelector('.store-name').textContent = store.name;
+  expand.querySelector('.tags').textContent = store.tags;
+  expand.querySelector('.address').textContent = store.address;
+  expand.querySelector('.description').innerHTML = store.description;
+
+  expand.querySelector('.line').href = store.line;
+  expand.querySelector('.ig').href = store.ig;
+  expand.querySelector('.nav').href = store.nav;
+  expand.querySelector('.book').href = store.book;
+
+  expand.style.display = 'none';
+  overlay.style.display = 'none';
+}
+  
 </script>
 <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLCB3EKFwsIqPwEEL_hxL7zluVpnzcCNM&callback=initMap">
