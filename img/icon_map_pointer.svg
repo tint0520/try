@@ -1,14 +1,13 @@
-<div class="map-toggle-box">
-  <!-- 圖層 icon -->
-  <div class="map-toggle-btn" id="toggle-style">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28" height="28">
-      <path d="M16 24l16 8 16-8v24l-16 8-16-8V24z" fill="none" stroke="#ff9fa5" stroke-width="3" stroke-linejoin="round"/>
-    </svg>
-  </div>
-  <!-- 定位 icon -->
-  <div class="map-toggle-btn" id="locate-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28" height="28">
-      <path d="M32 16 L48 48 L32 40 L16 48 Z" fill="none" stroke="#ff9fa5" stroke-width="3" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</div>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="128" viewBox="0 0 64 128">
+  <!-- 外框 -->
+  <rect x="0" y="0" width="64" height="128" rx="16" fill="#ffffff" stroke="#fcbec6" stroke-width="2"/>
+
+  <!-- 上半圖層 icon -->
+  <path d="M16 44 L32 36 L48 44 L32 52 Z" fill="none" stroke="#ff9fa5" stroke-width="3" stroke-linejoin="round"/>
+
+  <!-- 中間分隔線 -->
+  <line x1="8" y1="64" x2="56" y2="64" stroke="#f4d5da" stroke-width="1"/>
+
+  <!-- 下半導航 icon（右上箭頭） -->
+  <path d="M32 76 L46 108 L32 100 L18 108 Z" fill="none" stroke="#ff9fa5" stroke-width="3" stroke-linejoin="round"/>
+</svg>
