@@ -608,3 +608,26 @@ button.delete-btn-style:hover { background-color: var(--accent-delete-hover); bo
     .quotation-container .itemized-list th, .quotation-container .itemized-list td { padding: 5px !important; text-align: left; font-size: 12px !important;  }
     .quotation-container .info-row .value.hide-on-print-value {display: none !important;}
 }
+/* 螢幕隱藏、列印顯示 */
+.print-only { display: none; }
+
+@media print {
+  /* 隱藏整個應用殼與按鈕，只留列印內容 */
+  .sidebar, #content, .actions, #btn-print { display: none !important; }
+  .print-only { display: block; }
+
+  /* A4 版面與基本表格風格，可依公司樣式調 */
+  #print-root { font-family: "Noto Sans TC", system-ui, sans-serif; color:#111; }
+  .qdoc-title { font-size: 28px; font-weight:700; text-align:center; margin: 6mm 0 3mm; }
+  .qdoc-meta, .qdoc-parties, .qdoc-project, .qdoc-totals, .qdoc-bank { border:1px solid #333; padding:4mm; margin: 0 0 3mm; }
+  .qdoc-meta { display:flex; justify-content:space-between; }
+  .qdoc-parties { display:grid; grid-template-columns:1fr 1fr; gap:3mm; }
+  table.qdoc { width:100%; border-collapse:collapse; }
+  table.qdoc th, table.qdoc td { border:1px solid #333; padding:2.5mm; font-size:11pt; vertical-align:top; }
+  table.qdoc th { background:#f2f2f2; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .t-right { text-align:right; } .t-center { text-align:center; }
+  .qdoc-totals .row { display:flex; justify-content:space-between; }
+  .qdoc-totals .total { font-weight:700; background:#fff9c4; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .qdoc-stamps { display:grid; grid-template-columns:100px 1fr 100px 1fr; gap:3mm; align-items:center; margin-top:4mm; }
+  .stamp-box { height:28mm; border:1px dashed #777; }
+}
