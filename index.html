@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio VV DEMO</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="vv.png" alt="Logo" class="sidebar-logo">
+            <span class="sidebar-title">Studio VV</span>
+        </div>
+        <ul class="sidebar-nav">
+            <li><button class="nav-btn active" data-page="homepage">儀表板</button></li>
+            <li><button class="nav-btn" data-page="calendarpage">行事曆</button></li>
+            <li><button class="nav-btn" data-page="quotationpage">新增報價單</button></li>
+            <li><button class="nav-btn" data-page="quotationlistpage">報價單管理</button></li>
+            <li><button class="nav-btn" data-page="projectspage">專案管理</button></li>
+            <li><button class="nav-btn" data-page="customerspage">客戶資料</button></li>
+            <li><button class="nav-btn" data-page="reportspage">報表分析</button></li>
+            <li><button class="nav-btn" data-page="templatespage">項目庫管理</button></li>
+            <li><button class="nav-btn" data-page="notespage">補充說明庫管理</button></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <header class="mobile-header">
+            <button id="hamburger-btn" aria-label="Open menu">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path></svg>
+            </button>
+            <h1 id="mobile-page-title">儀表板</h1>
+        </header>
+
+        <div id="homepage" class="page-content active">
+            <div class="page-header"><h1>儀表板</h1></div>
+            <div class="kpi-grid">
+                <div class="kpi-card"><div class="card-title">進行中專案</div><div class="card-value" id="kpi-ongoing-projects">0</div></div>
+                <div class="kpi-card"><div class="card-title">待處理報價</div><div class="card-value" id="kpi-pending-quotes">0</div></div>
+                <div class="kpi-card"><div class="card-title">本月實際收入</div><div class="card-value" id="kpi-monthly-revenue">0</div></div>
+                <div class="kpi-card"><div class="card-title">本月新增報價</div><div class="card-value" id="kpi-monthly-quotes">0</div></div>
+            </div>
+            <div class="chart-grid">
+                <div class="chart-container-wrapper"><div class="chart-header"><h2>近六個月報價與簽約金額</h2></div><div class="chart-container"><canvas id="revenueChart"></canvas></div></div>
+                <div class="chart-container-wrapper"><div class="chart-header"><h2>報價單狀態分佈</h2></div><div class="chart-container chart-pie-container"><canvas id="statusPieChart"></canvas></div></div>
+            </div>
+            <div class="quick-access-grid">
+                <div class="quick-access-card"><div class="card-header"><h3>最近專案</h3></div><div class="card-content" id="recent-projects-list"></div></div>
+                <div class="quick-access-card"><div class="card-header"><h3>最近客戶活動</h3></div><div class="card-content" id="recent-customers-list"></div></div>
+            </div>
+        </div>
+
+        <div id="quotationpage" class="system-interface page-content">
+            <div class="controls-container">
+                <div class="control-group">
+                    <button id="addFromTemplateBtn">項目庫</button>
+                    <button id="addItemBtn">新增項目</button>
+                    <button id="deleteItemBtn">刪除項目</button>
+                    <button id="addFromNoteLibraryBtn">補充庫</button>
+                    <button id="addNoteBtn">新增補充</button>
+                    <button id="deleteNoteBtn">刪除補充</button>
+                </div>
+                <div class="control-group">
+                    <select id="statusSelect"><option value="draft">草稿</option><option value="sent">已發送</option><option value="confirmed">已確認</option><option value="rejected">已拒絕</option><option value="expired">已過期</option></select>
+                    <button id="saveQuoteBtn" class="primary-action">儲存報價單</button>
+                    <button id="exportEditPdfBtn">匯出 PDF</button>
+                </div>
+            </div>
+            <div class="quotation-container" id="quotation-document">
+                <header>
+                    <div class="logo"><img src="vv.png" alt="Studio VV  Logo"></div>
+                    <h1 contenteditable="true">Production Budget Quotation 報價單</h1>
+                    <div class="header-info">
+                        <div class="info-row"><span class="label">Client/客戶:</span><input class="value" id="clientName" list="customer-list"><datalist id="customer-list"></datalist><input type="hidden" id="customerId"></div>
+                        <div class="info-row"><span class="label">Date/製表日期:</span><input class="value" type="date" id="quoteDate"></div>
+                        <div class="info-row"><span class="label">Project/項目名:</span><input type="text" class="value" id="projectName"></div>
+                        <div class="info-row"><span class="label">Layout/樣稿日:</span><input class="value" type="date" id="layoutDate"></div>
+                        <div class="info-row"><span class="label">TEL/聯絡電話:</span><input type="text" class="value" id="telNumber"></div>
+                        <div class="info-row"><span class="label">Deadline/交稿日:</span><input class="value" type="date" id="deadlineDate"></div>
+                    </div>
+                </header>
+                <section class="itemized-list">
+                    <h2 contenteditable="true">Itemized List & Cost/費用明細</h2>
+                    <table id="itemTable">
+                        <thead><tr>
+                            <th contenteditable="true">Item/項目</th><th contenteditable="true">Description/說明</th><th contenteditable="true">Unit/單位</th><th contenteditable="true">Cost/單價</th><th contenteditable="true">Qty/數量</th><th contenteditable="true">Total/複價</th>
+                        </tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </section>
+                <section class="final-section">
+                    <table class="final-table"><tr>
+                        <td class="payment-cell">
+                            <h2 contenteditable="true">Terms & Conditions/付款方式:</h2>
+                            <p contenteditable="true">本報價於客戶簽章及匯款訂金50%後訂單生效。確認預付款後即開始製作。完稿無誤後,方可交付檔案。</p>
+                            <div class="payment-info">
+                                <h3 contenteditable="true">Remittance Account/收款帳戶:</h3>
+                                <ul><li><span contenteditable="true">戶名 | Studio VV </span></li><li><span contenteditable="true">帳戶 | 郵局局號(700)郵局 0012340-0567890</span></li></ul>
+                            </div>
+                        </td>
+                        <td class="summary-cell"><div class="summary-section">
+                            <div class="summary-row"><span class="label">Subtotal/小計:</span><span class="value" id="subtotal"></span></div>
+                            <div class="summary-row"><span class="label">Discount/折扣優惠:</span><span class="value" id="discount" contenteditable="true">0</span></div>
+                            <div class="summary-row"><span class="label">Tax/稅額: 5%</span><span class="value" id="tax"></span></div>
+                            <div class="summary-row grand-total"><span class="label">Grand Total/含稅總計:</span><span class="value" id="grand-total"></span></div>
+                        </div></td>
+                    </tr></table>
+                </section>
+                <section class="notes-container">
+                    <h2 contenteditable="true">Supplementary Notes/補充說明</h2>
+                    <ol id="noteList"></ol>
+                    <table class="signature-table"><tr>
+                        <td class="signature-cell-left"><h2 contenteditable="true">SIGNATURE CONFIRMATION 簽字確認</h2><div class="signature-line"></div></td>
+                        <td class="signature-cell-right-empty"></td>
+                    </tr></table>
+                    <table class="ninja-cat-table"><tr><td class="ninja-cat-cell" contenteditable="true">NINJA CAT</td></tr></table>
+                </section>
+            </div>
+        </div>
+        
+        <div id="quotationlistpage" class="system-interface page-content">
+            <div class="page-header"><h1>報價單列表</h1><button id="newQuoteFromListBtn" class="primary-action">新增報價單</button></div>
+            <div class="controls-container list-controls">
+                <input type="text" id="quoteSearch" placeholder="搜尋客戶、專案名稱..."><select id="statusFilter"><option value="all">所有狀態</option><option value="draft">草稿</option><option value="sent">已發送</option><option value="confirmed">已確認</option><option value="rejected">已拒絕</option><option value="expired">已過期</option></select><select id="sortSelect"><option value="date-newest">日期 - 最新在前</option><option value="date-oldest">日期 - 最舊在前</option><option value="client-asc">客戶名稱 - 字母排序</option><option value="total-highest">總金額 - 從高到低</option><option value="total-lowest">總金額 - 從低到高</option></select>
+            </div>
+            <div class="list-summary">總報價單數: <span id="quoteCount">0</span> 筆 | 總金額合計: <span id="totalAmount">0</span> 元</div>
+            <div id="quotesListContainer" class="list-container"></div>
+        </div>
+
+        <div id="quotationdetailpage" class="system-interface page-content">
+            <div class="page-header"><h1>報價單詳情</h1><div class="control-group"><button id="editFromDetailBtn">編輯</button><button id="cloneFromDetailBtn">複製</button><button id="convertToProjectBtn">轉為專案</button><button id="deleteFromDetailBtn" class="delete-btn-style">刪除</button><button id="exportDetailBtn" class="primary-action">匯出PDF</button></div></div>
+            <div class="quotation-container" id="quotation-detail-document"></div>
+        </div>
+        
+        <div id="customerspage" class="system-interface page-content">
+            <div id="customerListContainer">
+                <div class="page-header"><h1>客戶列表</h1><button id="addNewCustomerBtn" class="primary-action">新增客戶</button></div>
+                <div class="controls-container list-controls"><input type="text" id="customerSearch" placeholder="搜尋客戶名稱、聯絡人、電話..."></div>
+                <div id="customerCards" class="grid-container"></div>
+            </div>
+            <div id="customerFormContainer" style="display: none;">
+                <div class="page-header"><h1 id="customerFormTitle">新增客戶</h1></div>
+                <form id="customerForm">
+                    <input type="hidden" id="customerIdField">
+                    <div class="form-row"><label for="customerNameField">客戶/公司名稱:</label><input type="text" id="customerNameField" required></div>
+                    <div class="form-row"><label for="customerContactField">聯絡人:</label><input type="text" id="customerContactField"></div>
+                    <div class="form-row"><label for="customerPhoneField">聯絡電話:</label><input type="tel" id="customerPhoneField"></div>
+                    <div class="form-row"><label for="customerEmailField">電子郵件:</label><input type="email" id="customerEmailField"></div>
+                    <div class="form-row"><label for="customerSourceField">客戶來源:</label><input type="text" id="customerSourceField" placeholder="例如：官網、朋友介紹、廣告..."></div>
+                    <div class="form-row"><label for="customerAddressField">地址:</label><textarea id="customerAddressField" rows="3"></textarea></div>
+                    <div class="form-actions"><button type="button" id="backToCustomerListBtn">取消</button><button type="submit" id="saveCustomerBtn" class="primary-action">儲存</button></div>
+                </form>
+                <div id="customer-quotes-section" class="customer-quotes-section" style="display: none;"><h2>歷史報價單</h2><div id="customerQuotesListContainer"></div></div>
+            </div>
+        </div>
+        
+        <div id="projectspage" class="system-interface page-content">
+            <div id="projectListContainer">
+                <div class="page-header"><h1>專案列表</h1><button id="addNewProjectBtn" class="primary-action">手動新增專案</button></div>
+                <div class="controls-container list-controls"><input type="text" id="projectSearch" placeholder="搜尋專案或客戶名稱..."></div>
+                <div id="projectCards" class="grid-container"></div>
+            </div>
+            <div id="projectFormContainer" style="display: none;">
+                 <div class="page-header"><h1 id="projectFormTitle">編輯專案</h1></div>
+                <form id="projectForm">
+                    <input type="hidden" id="projectIdField"><input type="hidden" id="projectQuoteIdField">
+                    <div class="form-row-grid">
+                        <div class="form-col"><label for="projectNameField">專案名稱:</label><input type="text" id="projectNameField" required></div>
+                        <div class="form-col"><label for="projectStatusField">專案狀態:</label><select id="projectStatusField"><option value="pending">待開始</option><option value="in_progress">進行中</option><option value="completed">已完成</option><option value="on_hold">暫停</option></select></div>
+                        <div class="form-col"><label for="projectClientField">客戶名稱:</label><input type="text" id="projectClientField"></div>
+                        <div class="form-col"><label for="projectAmountField">專案金額:</label><input type="number" id="projectAmountField" value="0"></div>
+                        <div class="form-col"><label for="clientPhone">客戶電話:</label><input type="text" id="clientPhone"></div>
+                        <div class="form-col"><label for="clientEmail">客戶信箱:</label><input type="email" id="clientEmail"></div>
+                        <div class="form-col"><label for="photographerPhone">攝影師和電話:</label><input type="text" id="photographerPhone"></div>
+                        <div class="form-col"><label for="designerPhone">設計師和電話:</label><input type="text" id="designerPhone"></div>
+                        <div class="form-col"><label for="projectStartDateField">開始日期:</label><input type="date" id="projectStartDateField"></div>
+                        <div class="form-col"><label for="projectEndDateField">結束日期:</label><input type="date" id="projectEndDateField"></div>
+                    </div>
+                    <div class="task-section"><h2>任務清單</h2><table id="taskList" class="data-table"><thead><tr><th>狀態</th><th>任務說明</th><th>截止日期</th><th>操作</th></tr></thead><tbody></tbody></table><button type="button" id="addNewTaskBtn">新增任務</button></div>
+                    <div class="form-actions"><button type="button" id="deleteProjectBtn" class="delete-btn-style">刪除專案</button><button type="button" id="backToProjectListBtn">返回列表</button><button type="submit" id="saveProjectBtn" class="primary-action">儲存專案</button></div>
+                </form>
+            </div>
+        </div>
+
+        <div id="templatespage" class="system-interface page-content">
+            <div class="page-header"><h1>題庫管理</h1><button id="addNewTemplateItemBtn" class="primary-action">新增項目</button></div>
+            <div id="templateManagementContainer" class="grid-container"></div>
+        </div>
+        
+        <div id="notespage" class="system-interface page-content">
+            <div class="page-header"><h1>補充說明管理</h1><button id="addNewNoteItemBtn" class="primary-action">新增說明</button></div>
+            <div class="controls-container list-controls"><label for="noteCategoryFilter">篩選行業類別:</label><select id="noteCategoryFilter"><option value="all">所有類別</option></select></div>
+            <div id="notesManagementContainer" class="list-container"></div>
+        </div>
+
+        <div id="reportspage" class="system-interface page-content">
+            <div class="page-header"><h1>報表分析</h1><button id="exportReportBtn">匯出PDF</button></div>
+            <div class="controls-container report-controls">
+                <div class="date-range"><label>開始日期: <input type="date" id="reportStartDate"></label><label>結束日期: <input type="date" id="reportEndDate"></label></div>
+                <div class="report-filter"><label>客戶: <input type="text" id="clientFilter"></label><label>狀態:<select id="statusReportFilter"><option value="all">所有狀態</option><option value="pending">待開始</option><option value="in_progress">進行中</option><option value="completed">已完成</option><option value="on_hold">暫停</option></select></label></div>
+                <div class="report-type"><label>報表類型:<select id="reportType"><option value="summary">彙總報表</option><option value="client">客戶報表</option><option value="monthly">月報表</option><option value="customer_source">客戶來源分析</option><option value="detailed">詳細報表</option></select></label></div>
+            </div>
+            <div id="reportResult" class="reports-container"><p>請選擇日期範圍和報表類型以自動生成報表。</p></div>
+        </div>
+
+        <div id="calendarpage" class="system-interface page-content">
+            <div class="page-header"><h1>行事曆</h1></div>
+            <div class="controls-container">
+                <div class="calendar-nav"><button id="calendar-prev-month">&lt; 上個月</button><h2 id="calendar-month-year"></h2><button id="calendar-next-month">下個月 &gt;</button></div>
+                <div class="calendar-legend"><span class="event event-quote">報價</span><span class="event event-layout">樣稿</span><span class="event event-deadline">交稿</span><span class="event event-project-start">專案始</span><span class="event event-project-end">專案末</span><span class="event event-task">任務</span></div>
+            </div>
+            <div class="calendar-container"><div class="calendar-header"><div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div></div><div id="calendar-grid" class="calendar-grid"></div></div>
+        </div>
+    </main>
+    
+    <div id="mobile-menu-overlay"></div>
+    
+    <div id="templateModalBackdrop" class="modal-backdrop" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header"><h2>從題庫選擇項目</h2><button id="templateModalCloseBtn" class="modal-close-btn">&times;</button></div>
+            <div class="modal-body">
+                <div class="modal-col"><h3>項目 (Item)</h3><input type="text" id="templateItemSearch" placeholder="搜尋項目..."><ul id="templateItemList" class="modal-list"></ul></div>
+                <div class="modal-col"><h3>說明 (Description)</h3><div id="templateDescList" class="modal-desc-list"><p class="modal-placeholder">請先從左側選擇一個項目</p></div></div>
+            </div>
+            <div class="modal-footer"><button id="templateModalCancelBtn">取消</button><button id="templateModalConfirmBtn" class="primary-action">確認新增</button></div>
+        </div>
+    </div>
+
+    <div id="editTemplateModalBackdrop" class="modal-backdrop" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header"><h2 id="editTemplateModalTitle">編輯項目</h2><button id="editTemplateModalCloseBtn" class="modal-close-btn">&times;</button></div>
+            <div class="modal-body-single-col">
+                <input type="hidden" id="templateItemIdInput">
+                <div class="form-row"><label for="templateItemNameInput">項目名稱:</label><input type="text" id="templateItemNameInput"></div>
+                <div class="form-row"><label>說明列表:</label><div id="templateDescriptionsEditor" class="descriptions-editor"></div><button type="button" id="addTemplateDescriptionBtn" class="add-desc-btn">新增說明</button></div>
+            </div>
+            <div class="modal-footer"><button type="button" id="deleteTemplateItemBtn" class="delete-btn-style" style="margin-right: auto;">刪除項目</button><button type="button" id="editTemplateModalCancelBtn">取消</button><button type="button" id="editTemplateModalSaveBtn" class="primary-action">儲存</button></div>
+        </div>
+    </div>
+    
+    <div id="selectNoteModalBackdrop" class="modal-backdrop" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header"><h2>從補充庫選擇</h2><button id="selectNoteModalCloseBtn" class="modal-close-btn">&times;</button></div>
+            <div class="modal-body-single-col">
+                <div class="form-row"><label for="selectNoteCategoryFilter">篩選行業類別:</label><select id="selectNoteCategoryFilter"><option value="all">所有類別</option></select></div>
+                <div id="noteSelectionList" class="modal-desc-list"></div>
+            </div>
+            <div class="modal-footer"><button type="button" id="selectNoteModalCancelBtn">取消</button><button type="button" id="selectNoteConfirmBtn" class="primary-action">確認新增</button></div>
+        </div>
+    </div>
+    
+    <div id="editNoteModalBackdrop" class="modal-backdrop" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header"><h2 id="editNoteModalTitle">新增說明</h2><button id="editNoteModalCloseBtn" class="modal-close-btn">&times;</button></div>
+            <div class="modal-body-single-col">
+                <input type="hidden" id="noteIdInput">
+                <div class="form-row"><label for="noteTextInput">說明內容:</label><textarea id="noteTextInput" rows="4"></textarea></div>
+                <div class="form-row">
+                    <label>行業類別:</label>
+                    <div id="noteCategoriesCheckboxGroup" class="checkbox-group">
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer"><button type="button" id="deleteNoteItemBtn" class="delete-btn-style" style="margin-right: auto;">刪除</button><button type="button" id="editNoteModalCancelBtn">取消</button><button type="button" id="editNoteModalSaveBtn" class="primary-action">儲存</button></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
