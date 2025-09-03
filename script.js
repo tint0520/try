@@ -5,17 +5,17 @@
 (function() {
     // --- Sample Data ---
     const sampleCustomers = [
-        { id: 'cust-1', name: '夢想咖啡館', contact: '陳經理', phone: '02-23456789', email: 'dreamcafe@example.com', source: '客戶介紹', address: '台北市信義區夢想路123號' },
-        { id: 'cust-2', name: '未來科技公司', contact: '林小姐', phone: '03-5558888', email: 'future.tech@example.com', source: '官方網站', address: '新竹市科學園區創新路1號' }
+        { id: 'cust-1', name: '雲豹能源', contact: '陳經理', phone: '02-23456789', email: 'dreamcafe@example.com', source: '客戶介紹', address: '台北市信義區夢想路123號' },
+        { id: 'cust-2', name: '開陽能源科技公司', contact: '林小姐', phone: '03-5558888', email: 'future.tech@example.com', source: '官方網站', address: '新竹市科學園區創新路1號' }
     ];
 
     const sampleQuotations = [
-        { id: 'quote-1', client: '夢想咖啡館', customerId: 'cust-1', project: '品牌官方網站設計', tel: '02-23456789', quoteDate: '2025-08-15', layoutDate: '2025-08-25', deadlineDate: '2025-09-10', status: 'confirmed', grandTotal: 125000, timestamp: '2025-08-15T10:00:00Z', items: [{ item: '網站設計', description: '全站視覺設計', unit: '式', cost: 80000, qty: 1, total: 80000 }, { item: '前端開發', description: 'RWD響應式網頁', unit: '式', cost: 40000, qty: 1, total: 40000 }], notes: ['提供1年保固'] },
-        { id: 'quote-2', client: '未來科技公司', customerId: 'cust-2', project: '產品發表會主視覺設計', tel: '03-5558888', quoteDate: '2025-07-20', layoutDate: '2025-07-28', deadlineDate: '2025-08-05', status: 'sent', grandTotal: 63000, timestamp: '2025-07-20T14:30:00Z', items: [{ item: '主視覺設計', description: '包含Logo與標準字', unit: '組', cost: 60000, qty: 1, total: 60000 }], notes: [] }
+        { id: 'quote-1', client: '雲豹能源', customerId: 'cust-1', project: 'EPC工程', tel: '02-23456789', quoteDate: '2025-08-15', layoutDate: '2025-08-25', deadlineDate: '2025-09-10', status: 'confirmed', grandTotal: 125000, timestamp: '2025-08-15T10:00:00Z', items: [{ item: '網站設計', description: '全站視覺設計', unit: '式', cost: 80000, qty: 1, total: 80000 }, { item: '前端開發', description: 'RWD響應式網頁', unit: '式', cost: 40000, qty: 1, total: 40000 }], notes: ['提供1年保固'] },
+        { id: 'quote-2', client: '開陽能源科技公司', customerId: 'cust-2', project: '光伏設備採購', tel: '03-5558888', quoteDate: '2025-07-20', layoutDate: '2025-07-28', deadlineDate: '2025-08-05', status: 'sent', grandTotal: 63000, timestamp: '2025-07-20T14:30:00Z', items: [{ item: '主視覺設計', description: '包含Logo與標準字', unit: '組', cost: 60000, qty: 1, total: 60000 }], notes: [] }
     ];
     
     const sampleProjects = [
-        { id: 'proj-1', quoteId: 'quote-1', name: '品牌官方網站設計', client: '夢想咖啡館', projectAmount: 125000, startDate: '2025-08-20', endDate: '2025-09-10', status: 'in_progress', timestamp: '2025-08-20T09:00:00Z', tasks: [{done: true, description: '首頁設計初稿', dueDate: '2025-08-28'}, {done: false, description: '完成所有頁面切版', dueDate: '2025-09-05'}] }
+        { id: 'proj-1', quoteId: 'quote-1', name: '光伏設備採購', client: '雲豹能源', projectAmount: 125000, startDate: '2025-08-20', endDate: '2025-09-10', status: 'in_progress', timestamp: '2025-08-20T09:00:00Z', tasks: [{done: true, description: '首頁設計初稿', dueDate: '2025-08-28'}, {done: false, description: '完成所有頁面切版', dueDate: '2025-09-05'}] }
     ];
 
     const sampleTemplates = [
